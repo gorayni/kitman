@@ -46,3 +46,17 @@ def get_masked_patch(frame: MATRIX, bbox: VECTOR, mask_contour: np.ndarray):
 
 def area(bbox: VECTOR_LIKE):
     return (bbox[2] - bbox[0] + 1) * (bbox[3] - bbox[1] + 1)
+
+
+def iou(bboxA: VECTOR_LIKE, bboxB: VECTOR_LIKE):
+    xA = max(bboxA[0], bboxB[0])
+    yA = max(bboxA[1], bboxB[1])
+    xB = min(bboxA[2], bboxB[2])
+    yB = min(bboxA[3], bboxB[3])
+
+    interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+
+    boxAArea = area(bboxA)
+    boxBArea = area(bboxB)
+
+    return interArea / float(boxAArea + boxBArea - interArea)
