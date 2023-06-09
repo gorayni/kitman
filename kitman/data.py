@@ -1,5 +1,14 @@
 import os
 import re
+from typing import List, \
+    NamedTuple, \
+    Type, \
+    TypeVar, \
+    Union
+
+import numpy as np
+
+IndicesClass = TypeVar('IndicesClass')
 
 
 class BuildFilename:
@@ -30,3 +39,19 @@ class DirPathsBuilder:
                 setattr(self, attribute, BuildFilename(self.base_path, filename_template))
             else:
                 setattr(self, attribute, self.base_path.joinpath(filename_template))
+
+
+class PlayerPatches:
+    def __init__(self, idx: Union[NamedTuple, Type[IndicesClass]],
+                 patches: List[np.ndarray],
+                 coords: Union[List[np.ndarray], np.ndarray] = None,
+                 labels: Union[List[np.ndarray], np.ndarray] = None):
+        attributes = idx._fields if isinstance(idx, tuple) else vars(idx).keys()
+        for attr in attributes:
+            setattr(self, attr, getattr(idx, attr))
+        self.patches = patches
+        self.coords = coords
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.patches)
