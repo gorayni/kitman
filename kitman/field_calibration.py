@@ -3,9 +3,13 @@ from typing_extensions import TypeAlias
 
 import numpy as np
 
-REPRESENTATION_WIDTH = 64
 REPRESENTATION_HEIGHT = 32
+REPRESENTATION_WIDTH = 64
 REPRESENTATION_CHANNEL = 3
+
+DIM_IMAGE = (REPRESENTATION_HEIGHT,
+             REPRESENTATION_WIDTH,
+             REPRESENTATION_CHANNEL)
 
 NUMBER = Union[int, float]
 VECTOR: TypeAlias = np.ndarray
@@ -34,8 +38,8 @@ def calculate_player_position(bbox: VECTOR_LIKE, homography: MATRIX, shape: Tupl
     return unproject_image_point(homography, projection_point)[:2]
 
 
-def to_coords(point_2d: VECTOR, terrain_shape: VECTOR_LIKE):
+def to_coords(point_2d: VECTOR, dim_image: VECTOR_LIKE):
     point_2d = point_2d + 0.5
-    point_2d[0] *= terrain_shape[1]
-    point_2d[1] *= terrain_shape[0]
+    point_2d[0] *= dim_image[1]
+    point_2d[1] *= dim_image[0]
     return point_2d
