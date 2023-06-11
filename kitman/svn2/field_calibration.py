@@ -12,6 +12,13 @@ DIM_IMAGE = (REPRESENTATION_HEIGHT,
 GOAL_CENTERS = np.asarray([[0, 16], [64, 16]])
 
 
-def meter2radar(point2D, dim_terrain, dim_image):
-    return np.array([dim_image[1] * ((0.95 * point2D[0] / dim_terrain[1]) + 0.5 + 0.025),
-                     dim_image[0] * ((0.95 * point2D[1] / dim_terrain[0]) + 0.5 + 0.025)])
+def meter2radar(points2D, dim_terrain=None, dim_image=None):
+    if dim_terrain is None:
+        dim_terrain = DIM_TERRAIN
+
+    if dim_image is None:
+        dim_image = DIM_IMAGE
+
+    dim_image = dim_image[:2][-1::-1]
+    dim_terrain = dim_terrain[:2][-1::-1]
+    return dim_image * (0.95 * points2D / dim_terrain + 0.5 + 0.025)

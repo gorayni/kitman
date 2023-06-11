@@ -32,7 +32,7 @@ def load_homographies(calibration_filepath: Path, transformation_matrix: np.ndar
                              'confidence': prediction[0]['confidence']})
     return homographies
 
-s
+
 class FrameIndex:
     def __init__(self, half, frame_idx):
         self.half = half
