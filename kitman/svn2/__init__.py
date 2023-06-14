@@ -44,5 +44,6 @@ class MatchPaths(DirPathsBuilder):
         super().__init__(match_path, {'segmentations': 'segmentation_results_{}_HQ.npy',
                                       'calibrations': '{}_field_calib_ccbv.json',
                                       'sampling_aspect_ratio': 'sampling_aspect_ratio.txt',
-                                      'frames': ['{}_HQ', 'frames', '{:05d}.jpg']})
+                                      'frames': ['{}_HQ', 'frames', '{:05d}.jpg'],
+                                      'predicted_segmentations': 'predicted_segmentation_{}.npy'})
         self.match = match_path

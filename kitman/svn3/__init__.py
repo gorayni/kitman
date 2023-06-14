@@ -11,5 +11,7 @@ class SequencePaths(DirPathsBuilder):
     def __init__(self, sequence_path):
         super().__init__(sequence_path, {'segmentations': 'match_gt.npy',
                                          'homographies': 'homographies.npy',
-                                         'frames': ['img1', '{:06d}.jpg']})
+                                         'frames': ['img1', '{:06d}.jpg'],
+                                         'predicted_segmentations': 'match_predicted.npy',
+                                         })
         self.sequence = sequence_path
