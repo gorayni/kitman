@@ -33,6 +33,12 @@ def load_homographies(calibration_filepath: Path, transformation_matrix: np.ndar
     return homographies
 
 
+def load_groundtruth_bboxes(bboxes_filepath: Path):
+    with bboxes_filepath.open() as json_file:
+        data = json.load(json_file)
+    return data['predictions']
+
+
 class FrameIndex:
     def __init__(self, half, frame_idx):
         self.half = half

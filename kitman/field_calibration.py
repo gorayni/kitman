@@ -11,6 +11,10 @@ DIM_IMAGE = (REPRESENTATION_HEIGHT,
              REPRESENTATION_WIDTH,
              REPRESENTATION_CHANNEL)
 
+CENTER_COORDS = (REPRESENTATION_WIDTH // 2, REPRESENTATION_HEIGHT // 2)
+
+GOAL_CENTERS = np.asarray([[0, 16], [64, 16]])
+
 NUMBER = Union[int, float]
 VECTOR: TypeAlias = np.ndarray
 MATRIX: TypeAlias = np.ndarray
