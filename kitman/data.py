@@ -26,6 +26,16 @@ class BuildFilename:
         filename = self.filename_template.format(*_ids)
         return self.path.joinpath(filename)
 
+    @staticmethod
+    def create(path, filename_template):
+        if isinstance(filename_template, list):
+            filename_template = os.path.join(*filename_template)
+
+        if re.search(r'.*(\{\:?.*\}).*', filename_template):            
+            return BuildFilename(path, filename_template)
+        else:
+            return path.joinpath(filename_template)
+
 
 class DirPathsBuilder:
     def __init__(self, base_path, file_templates):
@@ -33,25 +43,30 @@ class DirPathsBuilder:
         self.file_templates = file_templates
 
         for attribute, filename_template in self.file_templates.items():
-            if isinstance(filename_template, list):
-                filename_template = os.path.join(*filename_template)
-            if re.search(r'.*(\{\:?.*\}).*', filename_template):
-                setattr(self, attribute, BuildFilename(self.base_path, filename_template))
-            else:
-                setattr(self, attribute, self.base_path.joinpath(filename_template))
+            setattr(self, attribute, BuildFilename.create(self.base_path, filename_template))            
 
 
-class PlayerPatches:
+class Players:
+    def __init__(self, idx: Union[NamedTuple, Type[IndicesClass]],
+                 coords: Union[List[np.ndarray], np.ndarray] = None,
+                 labels: Union[List[np.ndarray], np.ndarray] = None):        
+        attributes = idx._fields if isinstance(idx, tuple) else vars(idx).keys()
+        for attr in attributes:
+            setattr(self, attr, getattr(idx, attr))
+        self.coords = coords
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.coords)
+
+
+class PlayerPatches(Players):
     def __init__(self, idx: Union[NamedTuple, Type[IndicesClass]],
                  patches: List[np.ndarray],
                  coords: Union[List[np.ndarray], np.ndarray] = None,
                  labels: Union[List[np.ndarray], np.ndarray] = None):
-        attributes = idx._fields if isinstance(idx, tuple) else vars(idx).keys()
-        for attr in attributes:
-            setattr(self, attr, getattr(idx, attr))
+        super().__init__(idx, coords, labels)
         self.patches = patches
-        self.coords = coords
-        self.labels = labels
 
     def __len__(self):
         return len(self.patches)

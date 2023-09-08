@@ -9,9 +9,10 @@ class SequenceIndex:
 
 class SequencePaths(DirPathsBuilder):
     def __init__(self, sequence_path):
-        super().__init__(sequence_path, {'segmentations': 'match_gt.npy',
+        super().__init__(sequence_path, {'frames': ['img1', '{:06d}.jpg'],
                                          'homographies': 'homographies.npy',
-                                         'frames': ['img1', '{:06d}.jpg'],
                                          'predicted_segmentations': 'match_predicted.npy',
+                                         'predicted_segmentations_bkg': 'match_predicted_bkg.npy',
+                                         'segmentations': 'match_gt.npy',
                                          })
         self.sequence = sequence_path
