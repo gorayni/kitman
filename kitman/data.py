@@ -16,14 +16,19 @@ class BuildFilename:
         self.path = path
         self.filename_template = filename_template
 
-    def __getitem__(self, *_ids):
-        if isinstance(_ids[0], tuple):
-            _ids = _ids[0]
-        return self.__call__(*_ids)
+    def __getitem__(self, *substitutions):
+        if isinstance(substitutions[0], tuple):
+            substitutions = substitutions[0]
+        return self.__call__(*substitutions)
 
-    def __call__(self, *_ids):
-        _ids = tuple([_id + 1 for _id in _ids])
-        filename = self.filename_template.format(*_ids)
+    def __call__(self, *substitutions):
+        substitutions_ = []
+        for s in substitutions:
+            if isinstance(s, (int, float, complex)):
+                s += 1
+            substitutions_.append(s)
+        substitutions_ = tuple(substitutions_)
+        filename = self.filename_template.format(*substitutions_)
         return self.path.joinpath(filename)
 
     @staticmethod

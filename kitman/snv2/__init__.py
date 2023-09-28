@@ -9,12 +9,12 @@ from kitman.data import DirPathsBuilder
 from kitman.field_calibration import format_homography
 
 
-leagues_abbv = {'england_epl': 'ENG',
-                'europe_uefa-champions-league': 'UCL',
-                'france_ligue-1': 'FRA',
-                'germany_bundesliga': 'GER',
-                'italy_serie-a': 'ITA',
-                'spain_laliga': 'SPA'}
+leagues_abbv = {'england_epl': 'EN',
+                'europe_uefa-champions-league': 'CL',
+                'france_ligue-1': 'FR',
+                'germany_bundesliga': 'GE',
+                'italy_serie-a': 'IT',
+                'spain_laliga': 'SP'}
 
 team_abbv = {'1. FSV Mainz 05': 'M05',
              'AC Milan': 'ACM',
@@ -163,7 +163,7 @@ team_abbv = {'1. FSV Mainz 05': 'M05',
              'Zenit Petersburg': 'ZEN'}
 
 
-def shorten_name(match: Path):
+def parse_path(match: Path):
     league = leagues_abbv[match.parts[-3]]
     date = match.parts[-1][2:10]
     time = f'{match.parts[-1][13:15]}{match.parts[-1][16:18]}'
@@ -172,8 +172,17 @@ def shorten_name(match: Path):
     team1, team2 = score.split(' - ')
     score1, team1 = team1[-1:], team_abbv[team1[:-2]]
     score2, team2 = team2[:1], team_abbv[team2[2:]]
+    return league, date, time, team1, score1, score2, team2
 
+
+def shorten_name(match: Path):
+    league, date, time, team1, score1, score2, team2 = parse_path(match)
     return f'{league}_{date}_{time}_{team1}_{score1}-{score2}_{team2}'
+
+
+def shorten_test_name(match: Path):
+    league, date, _, team1, score1, score2, team2 = parse_path(match)
+    return f'{league}_{date}_{team1}_{score1}-{score2}_{team2}'
 
 
 def load_scaling_matrix(sars_filepath: Path):
@@ -216,9 +225,9 @@ class MatchPaths(DirPathsBuilder):
     def __init__(self, match_path):
         super().__init__(match_path, {'calibrations': '{}_field_calib_ccbv.json',
                                       'frames': ['{}_HQ', 'frames', '{:05d}.jpg'],
-                                      'groundtruth': 'segmentations.npy',
-                                      'predicted_segmentations': 'predicted_segmentation_{}.npy',
-                                      'predicted_segmentations_bkg': 'predicted_segmentation_bkg_{}.npy',
+                                      'groundtruth': 'groundtruth.npy',
+                                      'clustered_segmentations': 'clustering_{}_{}.npy',
+                                      'clustered_segmentations_bkg': 'clustering_bkg_{}_{}.npy',
                                       'sampling_aspect_ratio': 'sampling_aspect_ratio.txt',
                                       'segmentations': 'segmentation_results_{}_HQ.npy'
                                       })
