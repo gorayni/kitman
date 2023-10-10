@@ -24,7 +24,7 @@ class BuildFilename:
     def __call__(self, *substitutions):
         substitutions_ = []
         for s in substitutions:
-            if isinstance(s, (int, float, complex)):
+            if isinstance(s, (int, float, complex, np.integer, np.floating)):
                 s += 1
             substitutions_.append(s)
         substitutions_ = tuple(substitutions_)
