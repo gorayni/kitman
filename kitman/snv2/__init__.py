@@ -227,7 +227,9 @@ class MatchPaths(DirPathsBuilder):
                                       'frames': ['{}_HQ', 'frames', '{:05d}.jpg'],
                                       'groundtruth': 'groundtruth.npy',
                                       'clustered_segmentations': 'clustering_{}_{}.npy',
+                                      'clustered_means': 'cluster_means_{}.npy',
                                       'clustered_segmentations_bkg': 'clustering_bkg_{}_{}.npy',
+                                      'clustered_bkg_means': 'cluster_bkg_means_{}.npy',
                                       'sampling_aspect_ratio': 'sampling_aspect_ratio.txt',
                                       'segmentations': 'segmentation_results_{}_HQ.npy'
                                       })

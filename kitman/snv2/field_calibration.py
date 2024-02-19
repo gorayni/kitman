@@ -1,8 +1,5 @@
-import numpy as np
-
 from kitman.field_calibration import calculate_player_position, \
-    DIM_IMAGE, \
-    GOAL_CENTERS
+    DIM_IMAGE
 
 DIM_TERRAIN = (68, 105, 3)
 

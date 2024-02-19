@@ -27,4 +27,8 @@ class SegmentedPlayer:
     @staticmethod
     def load(segmentation_fpath: Path, min_score: float = 0.0, class_id_filters: List[int] = None):
         segmented_images = np.load(segmentation_fpath, allow_pickle=True)
+
+        for s in segmented_images:
+            s['masks'] = [[m.astype(np.intc) for m in masks] for masks in s['masks']]
+
         return [SegmentedPlayer.to_segmented_players(s, min_score, class_id_filters) for s in segmented_images]
