@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from kitman.data import DirPathsBuilder
+from kitman.data import DirPathsBuilder, NonZeroBasedIndex
 from kitman.field_calibration import format_homography
 
 
@@ -232,5 +232,6 @@ class MatchPaths(DirPathsBuilder):
                                       'clustered_bkg_means': 'cluster_bkg_means_{}.npy',
                                       'sampling_aspect_ratio': 'sampling_aspect_ratio.txt',
                                       'segmentations': 'segmentation_results_{}_HQ.npy'
-                                      })
+                                      },
+                         NonZeroBasedIndex())
         self.match = match_path

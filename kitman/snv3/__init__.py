@@ -1,4 +1,4 @@
-from kitman.data import DirPathsBuilder
+from kitman.data import DirPathsBuilder, NonZeroBasedIndex
 
 
 class SequenceIndex:
@@ -16,5 +16,6 @@ class SequencePaths(DirPathsBuilder):
                                          'clustered_segmentations_bkg': 'clustered_segmentation_bkg.npy',
                                          'clustered_bkg_means': 'cluster_bkg_means_{}.npy',
                                          'segmentations': 'match_gt.npy',
-                                         })
+                                         },
+                         NonZeroBasedIndex())
         self.sequence = sequence_path
