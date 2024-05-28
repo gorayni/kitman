@@ -48,19 +48,21 @@ def draw_soccer_field(figsize=None, ax=None):
     RADIUS = 9.15
     ax.add_patch(Circle((REPRESENTATION_WIDTH / 2, REPRESENTATION_HEIGHT / 2), RADIUS, linewidth=2, edgecolor='w',
                         facecolor='none'))
-
-    ax.add_patch(Circle((11, REPRESENTATION_HEIGHT / 2), RADIUS, linewidth=2, edgecolor='w', facecolor='none'))
-    ax.add_patch(Circle((REPRESENTATION_WIDTH - 11, REPRESENTATION_HEIGHT / 2), RADIUS, linewidth=2, edgecolor='w',
-                        facecolor='none'))
-
-    CORNER_RADIUS = 1
-    ax.add_patch(Arc((0, 0), CORNER_RADIUS, CORNER_RADIUS, 0, theta2=270, linewidth=2, color='w'))
-    ax.add_patch(Arc((0, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, 270, theta2=270, linewidth=2, color='w'))
-
-    ax.add_patch(Arc((REPRESENTATION_WIDTH, 0), CORNER_RADIUS, CORNER_RADIUS, 90, theta2=270, linewidth=2, color='w'))
     ax.add_patch(
-        Arc((REPRESENTATION_WIDTH, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, 180, theta2=270, linewidth=2,
-            color='w'))
+        Arc((11, REPRESENTATION_HEIGHT / 2), 2 * RADIUS, 2 * RADIUS, theta1=-55, theta2=55, linewidth=2, color='w'))
+    ax.add_patch(
+        Arc((REPRESENTATION_WIDTH - 11, REPRESENTATION_HEIGHT / 2), 2 * RADIUS, 2 * RADIUS, theta1=125, theta2=235,
+            linewidth=2, color='w'))
+
+    CORNER_RADIUS = 2
+    ax.add_patch(Arc((0, 0), CORNER_RADIUS, CORNER_RADIUS, theta1=0, theta2=90, linewidth=2, color='w'))
+    ax.add_patch(Arc((0, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, theta1=270, theta2=360, linewidth=2,
+                     color='w'))
+
+    ax.add_patch(Arc((REPRESENTATION_WIDTH, 0), CORNER_RADIUS, CORNER_RADIUS, theta1=90, theta2=1800, linewidth=2,
+                     color='w'))
+    ax.add_patch(Arc((REPRESENTATION_WIDTH, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, theta1=180,
+                     theta2=270, linewidth=2, color='w'))
 
     PENALTY_AREA_WIDTH = 16.5
     PENALTY_AREA_HEIGHT = 40.32
