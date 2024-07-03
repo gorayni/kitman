@@ -13,7 +13,7 @@ class SequencePaths(DirPathsBuilder):
                                          'homographies': 'homographies.npy',
                                          'clustered_segmentations': 'clustered_segmentation.npy',
                                          'clustered_means': 'cluster_means_{}.npy',
-                                         'clustered_segmentations_bkg': 'clustered_segmentation_bkg.npy',
+                                         'clustered_segmentations_bkg': 'clustered_segmentation_bkg_{}.npy',
                                          'clustered_bkg_means': 'cluster_bkg_means_{}.npy',
                                          'segmentations': 'match_gt.npy',
                                          },
