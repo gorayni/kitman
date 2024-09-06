@@ -15,10 +15,7 @@ VECTOR: TypeAlias = np.ndarray
 
 def get_patch(frame: MATRIX, bbox: VECTOR_LIKE, copy: bool = True):
     x1, y1, x2, y2 = bbox
-    if len(frame.shape) == 3:
-        patch = frame[y1:y2, x1:x2, :]
-    else:
-        patch = frame[y1:y2, x1:x2]
+    patch = frame[y1:y2, x1:x2, ...]    
     return np.copy(patch) if copy else patch
 
 
