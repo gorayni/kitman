@@ -25,4 +25,4 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["kitman"]
+packages = ["kitman", "kitman.snv2", "kitman.snv3"]

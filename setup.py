@@ -7,7 +7,7 @@ setup(
     author='Alejandro Cartas',
     author_email='alejandro.cartas@upf.edu',
     license='BSD 2-clause',
-    packages=['kitman'],
+    packages=['kitman', 'kitman.snv2', 'kitman.snv3'],
     install_requires=['numpy>=1.23.5',
                       'opencv-python>=4.6.0',
                       'scikit-image>=0.19.3'],
