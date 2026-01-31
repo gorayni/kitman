@@ -30,7 +30,7 @@ class BuildFilename:
 
         if transformations is None:
             self.transformations = []
-        elif isinstance(transformations, list):
+        elif not isinstance(transformations, list):
             self.transformations = [transformations]
         else:
             self.transformations = transformations
