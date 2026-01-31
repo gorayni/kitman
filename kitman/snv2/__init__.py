@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from kitman.data import DirPathsBuilder, NonZeroBasedIndex
+from kitman.data import DirPathsBuilder, NonZeroBasedIndex, HierarchicalFilenameBuilder
 from kitman.field_calibration import format_homography
 
 
@@ -230,6 +230,7 @@ class FrameIndex:
 
 class MatchPaths(DirPathsBuilder):
     def __init__(self, match_path):
+        match_path = Path(match_path)
         super().__init__(
             match_path,
             {
@@ -237,9 +238,8 @@ class MatchPaths(DirPathsBuilder):
                 "clustered_segmentations": "clustering_{}_{}.npy",
                 "clustered_means": "cluster_means_{}.npy",
                 "clustered_segmentations_bkg": "clustering_bkg_{}_{}.npy",
-                "clustered_bkg_means": "cluster_bkg_means_{}.npy",                
-                "frames": ["{}_HQ", "frames", "{:05d}.jpg"],
-                "frames_dir": ["{}_HQ", "frames"],
+                "clustered_bkg_means": "cluster_bkg_means_{}.npy",
+                "frames": [["{}_HQ", "frames"], "{:05d}.jpg"],
                 "groundtruth": "groundtruth.npy",  # NEEDED, seems it was created somehow
                 "sampling_aspect_ratio": "sampling_aspect_ratio.txt",  # NEEDED, seems it was created somehow
                 "segmentations": "segmentation_results_{}_HQ.npy",  # NEEDED, seems it was created somehow
@@ -247,3 +247,4 @@ class MatchPaths(DirPathsBuilder):
             NonZeroBasedIndex(),
         )
         self.match = match_path
+        self.frames_extension = "jpg"
