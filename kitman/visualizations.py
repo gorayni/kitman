@@ -245,7 +245,7 @@ def plot_players_overlaid(
             )
         }
 
-    patches = {c: [] for c in data["segmentation_patches"]}
+    patches = {c: [] for c in data["player_categories"]}
     for c, p in zip(data["player_categories"], data["segmentation_patches"]):
         patches[c].append(p)
 
