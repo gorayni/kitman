@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import re
 from abc import ABC, abstractmethod
 from typing import List, NamedTuple, Type, TypeVar, Union
@@ -29,7 +30,7 @@ class BuildFilename:
 
         if transformations is None:
             self.transformations = []
-        elif type(transformations) is not list:
+        elif isinstance(transformations, list):
             self.transformations = [transformations]
         else:
             self.transformations = transformations
@@ -57,12 +58,12 @@ class BuildFilename:
         if re.search(r".*(\{\:?.*\}).*", filename_template):
             return BuildFilename(path, filename_template, transformations)
         else:
-            return path.joinpath(filename_template)
+            return path / filename_template
 
 
 class DirPathsBuilder:
-    def __init__(self, base_path, file_templates, transformations=None):
-        self.base_path = base_path
+    def __init__(self, base_path: Union[str, os.PathLike, Path], file_templates, transformations=None):
+        self.base_path = Path(base_path)
         self.file_templates = file_templates
         self.transformations = transformations
 

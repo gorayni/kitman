@@ -1,11 +1,14 @@
 import warnings
 
+import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Arc
-from matplotlib.patches import Circle
-from matplotlib.patches import Rectangle
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Arc, Circle, Rectangle
+from skimage import io
 from skimage.draw import polygon
+from typing import TypedDict, Sequence, Optional, Tuple
+from matplotlib.patches import Patch
 
 REPRESENTATION_WIDTH = 105
 REPRESENTATION_HEIGHT = 68
@@ -198,4 +201,58 @@ def draw_soccer_field(figsize=None, ax=None):
     ax.set_aspect("equal")
 
     if "fig" in locals():
+        return fig, ax
+
+
+def sample_colors_from_cmap(N, cmap_name="hsv"):
+    cmap = cm.get_cmap(cmap_name)
+    colors = cmap(np.linspace(0, 1, N))
+    return colors
+
+
+class FrameDataDict(TypedDict):
+    frame_path: str
+    player_categories: Sequence
+    segmentation_patches: Sequence[polygon]
+
+
+def plot_players_overlaid(
+    data: FrameDataDict,
+    player_colors: Optional[dict] = None,
+    figsize=(15, 7.5),
+    title: Optional[str] = None,
+    ax=None,
+    fontsize: int = 14,
+) -> Optional[Tuple[plt.Figure, plt.Axes]]:
+    frame = io.imread(data["frame_path"])
+
+    if not ax:
+        fig, ax = plt.subplots(figsize=figsize)
+
+    if title:
+        ax.set_title(title, fontweight="bold", fontsize=fontsize)
+
+    ax.imshow(frame)
+
+    categories = np.unique(data["player_categories"])
+
+    if not player_colors:
+        num_player_categories = len(categories)
+        player_colors = {
+            cat: col
+            for cat, col in zip(
+                categories, sample_colors_from_cmap(num_player_categories)
+            )
+        }
+
+    patches = {c: [] for c in data["segmentation_patches"]}
+    for c, p in zip(data["player_categories"], data["segmentation_patches"]):
+        patches[c].append(p)
+
+    for i in patches.keys():
+        p = PatchCollection(patches[i], color=player_colors[i], alpha=0.4)
+        ax.add_collection(p)
+
+    if "fig" in locals():
+        fig.tight_layout()
         return fig, ax
