@@ -15,7 +15,7 @@ VECTOR: TypeAlias = np.ndarray
 
 def get_patch(frame: MATRIX, bbox: VECTOR_LIKE, copy: bool = True):
     x1, y1, x2, y2 = bbox
-    patch = frame[y1:y2, x1:x2, ...]    
+    patch = frame[y1:y2, x1:x2, ...]
     return np.copy(patch) if copy else patch
 
 
@@ -28,7 +28,7 @@ def to_mask(bb: VECTOR, contours: np.ndarray):
         # FIXME: Polygon function sometimes exceeds the patch shape
         indices = (rr < height) & (cc < width)
         if len(indices) < len(rr):
-            warnings.warn(f'Generated polygon exceeds patch shape')
+            warnings.warn(f"Generated polygon exceeds patch shape")
         rr, cc = rr[indices], cc[indices]
 
         mask[rr, cc] = 255
