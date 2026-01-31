@@ -1,15 +1,12 @@
 import os
 import re
 from abc import ABC, abstractmethod
-from typing import List, \
-    NamedTuple, \
-    Type, \
-    TypeVar, \
-    Union
+from typing import List, NamedTuple, Type, TypeVar, Union
 
 import numpy as np
 
-IndicesClass = TypeVar('IndicesClass')
+
+IndicesClass = TypeVar("IndicesClass")
 
 
 class Transformation(ABC):
@@ -57,7 +54,7 @@ class BuildFilename:
         if isinstance(filename_template, list):
             filename_template = os.path.join(*filename_template)
 
-        if re.search(r'.*(\{\:?.*\}).*', filename_template):
+        if re.search(r".*(\{\:?.*\}).*", filename_template):
             return BuildFilename(path, filename_template, transformations)
         else:
             return path.joinpath(filename_template)
@@ -70,13 +67,22 @@ class DirPathsBuilder:
         self.transformations = transformations
 
         for attribute, filename_template in self.file_templates.items():
-            setattr(self, attribute, BuildFilename.create(self.base_path, filename_template, transformations))
+            setattr(
+                self,
+                attribute,
+                BuildFilename.create(
+                    self.base_path, filename_template, transformations
+                ),
+            )
 
 
 class Players:
-    def __init__(self, idx: Union[NamedTuple, Type[IndicesClass]],
-                 coords: Union[List[np.ndarray], np.ndarray] = None,
-                 labels: Union[List[np.ndarray], np.ndarray] = None):
+    def __init__(
+        self,
+        idx: Union[NamedTuple, Type[IndicesClass]],
+        coords: Union[List[np.ndarray], np.ndarray] = None,
+        labels: Union[List[np.ndarray], np.ndarray] = None,
+    ):
         attributes = idx._fields if isinstance(idx, tuple) else vars(idx).keys()
         for attr in attributes:
             setattr(self, attr, getattr(idx, attr))
@@ -88,10 +94,13 @@ class Players:
 
 
 class PlayerPatches(Players):
-    def __init__(self, idx: Union[NamedTuple, Type[IndicesClass]],
-                 patches: List[np.ndarray],
-                 coords: Union[List[np.ndarray], np.ndarray] = None,
-                 labels: Union[List[np.ndarray], np.ndarray] = None):
+    def __init__(
+        self,
+        idx: Union[NamedTuple, Type[IndicesClass]],
+        patches: List[np.ndarray],
+        coords: Union[List[np.ndarray], np.ndarray] = None,
+        labels: Union[List[np.ndarray], np.ndarray] = None,
+    ):
         super().__init__(idx, coords, labels)
         self.patches = patches
 

@@ -2,11 +2,9 @@ import cv2
 import numpy as np
 from PIL import Image
 from skimage import io
-from skimage.morphology import binary_erosion, \
-    disk
+from skimage.morphology import binary_erosion, disk
 
-from kitman.regions import get_patch, \
-    to_mask
+from kitman.regions import get_patch, to_mask
 
 
 def remove_players_background(frame_path, segmented_players, erosion_disk_radius=2):
@@ -23,5 +21,5 @@ def remove_players_background(frame_path, segmented_players, erosion_disk_radius
         masked_patch = cv2.bitwise_and(patch, patch, mask=mask)
 
         r, g, b = cv2.split(masked_patch)
-        players.append(Image.fromarray(cv2.merge([r, g, b, mask], 4), 'RGBA'))
+        players.append(Image.fromarray(cv2.merge([r, g, b, mask], 4), "RGBA"))
     return players

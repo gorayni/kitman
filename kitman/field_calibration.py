@@ -7,9 +7,7 @@ REPRESENTATION_HEIGHT = 32
 REPRESENTATION_WIDTH = 64
 REPRESENTATION_CHANNEL = 3
 
-DIM_IMAGE = (REPRESENTATION_HEIGHT,
-             REPRESENTATION_WIDTH,
-             REPRESENTATION_CHANNEL)
+DIM_IMAGE = (REPRESENTATION_HEIGHT, REPRESENTATION_WIDTH, REPRESENTATION_CHANNEL)
 
 CENTER_COORDS = np.asarray([REPRESENTATION_WIDTH // 2, REPRESENTATION_HEIGHT // 2])
 
@@ -32,7 +30,9 @@ def format_homography(homography: VECTOR):
     return np.linalg.inv(homography)
 
 
-def calculate_player_position(bbox: VECTOR_LIKE, homography: MATRIX, shape: Tuple[int, ...] = None):
+def calculate_player_position(
+    bbox: VECTOR_LIKE, homography: MATRIX, shape: Tuple[int, ...] = None
+):
     x, y = (bbox[0] + bbox[2]) / 2, bbox[3]
     if shape is not None:
         x = x / shape[1] - 0.5

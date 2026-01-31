@@ -1,6 +1,5 @@
 from pathlib import Path
-from typing import Dict, \
-    List
+from typing import Dict, List
 
 import numpy as np
 
@@ -15,20 +14,43 @@ class SegmentedPlayer:
         self.score = score
 
     @staticmethod
-    def to_segmented_players(seg_img: Dict, min_score: float = 0.0, filtered_class_ids: List[int] = None):
+    def to_segmented_players(
+        seg_img: Dict, min_score: float = 0.0, filtered_class_ids: List[int] = None
+    ):
         if filtered_class_ids:
-            return [SegmentedPlayer(bb, mask, class_id, score) for bb, mask, class_id, score in
-                    zip(seg_img['boxes'], seg_img['masks'], seg_img['class_ids'], seg_img['scores'])
-                    if class_id in filtered_class_ids and score >= min_score]
+            return [
+                SegmentedPlayer(bb, mask, class_id, score)
+                for bb, mask, class_id, score in zip(
+                    seg_img["boxes"],
+                    seg_img["masks"],
+                    seg_img["class_ids"],
+                    seg_img["scores"],
+                )
+                if class_id in filtered_class_ids and score >= min_score
+            ]
 
-        return [SegmentedPlayer(bb, mask, class_id, score) for bb, mask, class_id, score in
-                zip(seg_img['boxes'], seg_img['masks'], seg_img['class_ids'], seg_img['scores'])]
+        return [
+            SegmentedPlayer(bb, mask, class_id, score)
+            for bb, mask, class_id, score in zip(
+                seg_img["boxes"],
+                seg_img["masks"],
+                seg_img["class_ids"],
+                seg_img["scores"],
+            )
+        ]
 
     @staticmethod
-    def load(segmentation_fpath: Path, min_score: float = 0.0, class_id_filters: List[int] = None):
+    def load(
+        segmentation_fpath: Path,
+        min_score: float = 0.0,
+        class_id_filters: List[int] = None,
+    ):
         segmented_images = np.load(segmentation_fpath, allow_pickle=True)
 
         for s in segmented_images:
-            s['masks'] = [[m.astype(np.intc) for m in masks] for masks in s['masks']]
+            s["masks"] = [[m.astype(np.intc) for m in masks] for masks in s["masks"]]
 
-        return [SegmentedPlayer.to_segmented_players(s, min_score, class_id_filters) for s in segmented_images]
+        return [
+            SegmentedPlayer.to_segmented_players(s, min_score, class_id_filters)
+            for s in segmented_images
+        ]

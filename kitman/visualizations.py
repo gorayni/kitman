@@ -28,7 +28,7 @@ def draw_mask(frame, bb, contours, color=None):
         cc = np.minimum(cc, patch.shape[1] - 1)
 
         if len(rr) < original_rr_size:
-            warnings.warn(f'Generated polygon exceeds patch shape')
+            warnings.warn(f"Generated polygon exceeds patch shape")
 
         patch[rr, cc, ...] = color
 
@@ -41,50 +41,161 @@ def draw_soccer_field(figsize=None, ax=None):
         fig, ax = plt.subplots(figsize=figsize)
 
     ax.add_patch(
-        Rectangle((0, 0), REPRESENTATION_WIDTH, REPRESENTATION_HEIGHT, linewidth=3, edgecolor='w', facecolor='g'))
+        Rectangle(
+            (0, 0),
+            REPRESENTATION_WIDTH,
+            REPRESENTATION_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
     ax.add_patch(
-        Rectangle((0, 0), REPRESENTATION_WIDTH / 2, REPRESENTATION_HEIGHT, linewidth=3, edgecolor='w', facecolor='g'))
+        Rectangle(
+            (0, 0),
+            REPRESENTATION_WIDTH / 2,
+            REPRESENTATION_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
 
     RADIUS = 9.15
-    ax.add_patch(Circle((REPRESENTATION_WIDTH / 2, REPRESENTATION_HEIGHT / 2), RADIUS, linewidth=2, edgecolor='w',
-                        facecolor='none'))
     ax.add_patch(
-        Arc((11, REPRESENTATION_HEIGHT / 2), 2 * RADIUS, 2 * RADIUS, theta1=-55, theta2=55, linewidth=2, color='w'))
+        Circle(
+            (REPRESENTATION_WIDTH / 2, REPRESENTATION_HEIGHT / 2),
+            RADIUS,
+            linewidth=2,
+            edgecolor="w",
+            facecolor="none",
+        )
+    )
     ax.add_patch(
-        Arc((REPRESENTATION_WIDTH - 11, REPRESENTATION_HEIGHT / 2), 2 * RADIUS, 2 * RADIUS, theta1=125, theta2=235,
-            linewidth=2, color='w'))
+        Arc(
+            (11, REPRESENTATION_HEIGHT / 2),
+            2 * RADIUS,
+            2 * RADIUS,
+            theta1=-55,
+            theta2=55,
+            linewidth=2,
+            color="w",
+        )
+    )
+    ax.add_patch(
+        Arc(
+            (REPRESENTATION_WIDTH - 11, REPRESENTATION_HEIGHT / 2),
+            2 * RADIUS,
+            2 * RADIUS,
+            theta1=125,
+            theta2=235,
+            linewidth=2,
+            color="w",
+        )
+    )
 
     CORNER_RADIUS = 2
-    ax.add_patch(Arc((0, 0), CORNER_RADIUS, CORNER_RADIUS, theta1=0, theta2=90, linewidth=2, color='w'))
-    ax.add_patch(Arc((0, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, theta1=270, theta2=360, linewidth=2,
-                     color='w'))
+    ax.add_patch(
+        Arc(
+            (0, 0),
+            CORNER_RADIUS,
+            CORNER_RADIUS,
+            theta1=0,
+            theta2=90,
+            linewidth=2,
+            color="w",
+        )
+    )
+    ax.add_patch(
+        Arc(
+            (0, REPRESENTATION_HEIGHT),
+            CORNER_RADIUS,
+            CORNER_RADIUS,
+            theta1=270,
+            theta2=360,
+            linewidth=2,
+            color="w",
+        )
+    )
 
-    ax.add_patch(Arc((REPRESENTATION_WIDTH, 0), CORNER_RADIUS, CORNER_RADIUS, theta1=90, theta2=1800, linewidth=2,
-                     color='w'))
-    ax.add_patch(Arc((REPRESENTATION_WIDTH, REPRESENTATION_HEIGHT), CORNER_RADIUS, CORNER_RADIUS, theta1=180,
-                     theta2=270, linewidth=2, color='w'))
+    ax.add_patch(
+        Arc(
+            (REPRESENTATION_WIDTH, 0),
+            CORNER_RADIUS,
+            CORNER_RADIUS,
+            theta1=90,
+            theta2=1800,
+            linewidth=2,
+            color="w",
+        )
+    )
+    ax.add_patch(
+        Arc(
+            (REPRESENTATION_WIDTH, REPRESENTATION_HEIGHT),
+            CORNER_RADIUS,
+            CORNER_RADIUS,
+            theta1=180,
+            theta2=270,
+            linewidth=2,
+            color="w",
+        )
+    )
 
     PENALTY_AREA_WIDTH = 16.5
     PENALTY_AREA_HEIGHT = 40.32
     ax.add_patch(
-        Rectangle((0, (REPRESENTATION_HEIGHT - PENALTY_AREA_HEIGHT) / 2), PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT,
-                  linewidth=3, edgecolor='w', facecolor='g'))
+        Rectangle(
+            (0, (REPRESENTATION_HEIGHT - PENALTY_AREA_HEIGHT) / 2),
+            PENALTY_AREA_WIDTH,
+            PENALTY_AREA_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
     ax.add_patch(
-        Rectangle((REPRESENTATION_WIDTH - PENALTY_AREA_WIDTH, (REPRESENTATION_HEIGHT - PENALTY_AREA_HEIGHT) / 2),
-                  PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT, linewidth=3, edgecolor='w', facecolor='g'))
+        Rectangle(
+            (
+                REPRESENTATION_WIDTH - PENALTY_AREA_WIDTH,
+                (REPRESENTATION_HEIGHT - PENALTY_AREA_HEIGHT) / 2,
+            ),
+            PENALTY_AREA_WIDTH,
+            PENALTY_AREA_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
 
     GOAL_AREA_WIDTH = 5.5
     GOAL_AREA_HEIGHT = 18.32
     ax.add_patch(
-        Rectangle((0, (REPRESENTATION_HEIGHT - GOAL_AREA_HEIGHT) / 2), GOAL_AREA_WIDTH, GOAL_AREA_HEIGHT, linewidth=3,
-                  edgecolor='w', facecolor='g'))
-    ax.add_patch(Rectangle((REPRESENTATION_WIDTH - GOAL_AREA_WIDTH, (REPRESENTATION_HEIGHT - GOAL_AREA_HEIGHT) / 2),
-                           GOAL_AREA_WIDTH, GOAL_AREA_HEIGHT, linewidth=3, edgecolor='w', facecolor='g'))
+        Rectangle(
+            (0, (REPRESENTATION_HEIGHT - GOAL_AREA_HEIGHT) / 2),
+            GOAL_AREA_WIDTH,
+            GOAL_AREA_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
+    ax.add_patch(
+        Rectangle(
+            (
+                REPRESENTATION_WIDTH - GOAL_AREA_WIDTH,
+                (REPRESENTATION_HEIGHT - GOAL_AREA_HEIGHT) / 2,
+            ),
+            GOAL_AREA_WIDTH,
+            GOAL_AREA_HEIGHT,
+            linewidth=3,
+            edgecolor="w",
+            facecolor="g",
+        )
+    )
 
     ax.set_xlim([0, REPRESENTATION_WIDTH])
     ax.set_ylim([0, REPRESENTATION_HEIGHT])
-    ax.set_aspect('equal')
+    ax.set_aspect("equal")
 
-    if 'fig' in locals():
+    if "fig" in locals():
         return fig, ax
-
