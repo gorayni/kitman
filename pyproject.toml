@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=64.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Kitman"
+version = "0.0.1"
+description = "Utilities for Soccer Related Projects"
+readme = "README.md"
+authors = [
+    { name = "Alejandro Cartas", email = "alejandro.cartas@upf.edu" }
+]
+license = { text = "BSD 2-clause" }
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.9",
+]
+dependencies = [
+    "numpy>=1.23.5",
+    "opencv-python>=4.6.0",
+    "scikit-image>=0.19.3",
+]
+
+[tool.setuptools]
+packages = ["kitman"]
