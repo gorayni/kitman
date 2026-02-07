@@ -9,7 +9,7 @@ setup(
     license='BSD 2-clause',
     packages=['kitman', 'kitman.snv2', 'kitman.snv3'],
     install_requires=['numpy>=1.23.5',
-                      'opencv-python>=4.6.0',
+                      'opencv-python>=4.5.3',
                       'scikit-image>=0.19.3'],
     classifiers=[
         'Development Status :: 1 - Planning',
